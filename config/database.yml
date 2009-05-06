@@ -1,0 +1,20 @@
+development:
+  adapter: mysql
+  encoding: utf8
+  database: vegas_development
+  username: root
+  password: password
+ 
+test:
+  adapter: mysql
+  encoding: utf8
+  database: vegas_test
+  username: root
+  password: password
+
+production:
+  adapter: mysql
+  encoding: utf8
+  database: vegas_production
+  username: root
+  password: password

@@ -1,0 +1,21 @@
+Vegas
+Alex Chaffee
+
+Sinatra
+http://sinatrarb.com
+
+Erector
+http://erector.rubyforge.org
+
+jquery-in-place-editor
+http://code.google.com/p/jquery-in-place-editor/
+
+jQuery
+http://jquery.com/
+
+http://paulhorman.com/filesystemwatcher/
+
+jQuery Autocomplete by Dylan Verheul
+http://dyve.net/jquery/?autocomplete
+and Pengo
+http://www.pengoworks.com/workshop/jquery/autocomplete.htm
