@@ -15,7 +15,6 @@ class UserList < Erector::Widget
     }
 
     ul.article_list {
-      overflow-y: auto;
       min-width: 30em;
       width: 100%;
     }
@@ -40,6 +39,7 @@ class UserList < Erector::Widget
     ul :class => "user_list" do
       @users.each do |user|
         li do
+          text "All articles by "
           a user.name, :href => "/user/#{user.to_param}"
           widget ArticleList, :articles => user.articles
         end

@@ -30,7 +30,7 @@ class SearchBox < Erector::Widget
         input :type => "hidden",
                 :id => html_id("current"),
                 :name => "id",
-                :value => current_article_id
+                :value => 0
         input :type => "button", :value => "Go",
           :onclick => "#{grab_value}; this.form.submit();"
       end
@@ -40,7 +40,6 @@ class SearchBox < Erector::Widget
       "$('##{html_id("current")}').val($('##{selection_html_id}').val())"
     end
   end
-  
   
   def content
     div :class => "search" do
@@ -60,7 +59,7 @@ class SearchBox < Erector::Widget
 
       jquery <<-SCRIPT
           $("##{html_id("input")}").autocomplete(
-              "/article/search",
+              "/search",
               {
                   delay:10,
                   minChars:1,

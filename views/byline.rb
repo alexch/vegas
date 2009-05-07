@@ -9,7 +9,7 @@ class Byline < Erector::Widget
   def content
     span :class => "byline" do
       text "by "
-      text user.name
+      a user.name, :href => user.url
       text " "
       span :title => at.to_s do # todo: nicer datetime formatting
         text time_ago_in_words(at)

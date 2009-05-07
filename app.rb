@@ -84,14 +84,17 @@ end
 
 get "/user/:id" do
   user = User.find(params[:id])
-  SingleWidgetPage.new(ArticleList.new(:articles => user.articles)).to_s
+  render_page UserPage, :user => user
 end
 
 get "/article/new" do
-  SingleWidgetPage.new(
-    ArticleForm.new(
-      :author => current_user
-  )).to_s
+  view = ArticleForm.new(:author => current_user)
+  render_page SingleWidgetPage, :widget_class => view
+end
+
+get "/article" do
+  article = Article.find(params[:id])
+  redirect article.url
 end
 
 get "/article/:id" do

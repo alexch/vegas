@@ -41,5 +41,9 @@ class User < ActiveRecord::Base
     return u if User.encrypt(pass, u.salt) == u.hashed_password
     nil
   end
+  
+  def url
+    "/user/#{to_param}"
+  end
 
 end

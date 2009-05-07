@@ -4,6 +4,8 @@ class VegasPage < Page
   
   needs :current_user, :flash => nil
 
+  
+
   def page_title
     "vegas"
   end
@@ -64,8 +66,13 @@ class VegasPage < Page
     render_login
     render_logo
     div :class => "clear"
-    render_flash      
-    main_content
+    render_flash
+    div :class => "search_box" do
+      widget SearchBox
+    end
+    div :class => "main" do
+      main_content
+    end
     render_footer
   end
   
@@ -121,6 +128,16 @@ class VegasPage < Page
       color: red; 
       font: italic 12pt verdana,arial,helvetica;
       font-weight: bold;
+    }
+    
+    div.main {
+      min-width: 20em;
+      max-width: 50em;
+      margin: auto;
+    }
+    
+    div.search_box {
+      float: right;
     }
   STYLE
   
