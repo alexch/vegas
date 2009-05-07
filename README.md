@@ -15,7 +15,7 @@ I feel the same way about Rails.
 *  scaffolding
 *  plugins
 *  loadpath munging
-  *  automatic class loading and reloading
+  * automatic class loading and reloading
 * active_support helpers
 * caching
 
@@ -25,23 +25,25 @@ I feel the same way about Rails.
 * Erector
 * ActiveRecord
 * no scaffolds, 
-  *    don't miss em
-  *    wouldn't it be nice if we had activescaffold type components for Erector
+  * don't miss em
+  * wouldn't it be nice if we had activescaffold type components for Erector
 *  gems
-  *    why isn't every plugin a gem?
+  * why isn't every plugin a gem?
 * req
   * run.rb (rake run)
 * Rack::Cache
 
 ## Everything else is just code.
 
-This app is a demonstration template with some rake tasks and user authentication, using Sinatra, Erector, ActiveRecord, and "req". 
+This app is a demonstration template with some rake tasks and user
+authentication, using Sinatra, Erector, ActiveRecord, and "req".
 
 Auto-loading is handled by "run.rb" (aka "rake run") which 
 
-Classes must declare their dependencies (if they're out of alphabetical order), or declare global
+Classes must declare their dependencies (if they're out of alphabetical order),
+or declare global primary dependencies in setup.rb.
 
-Yehuda: Rails will always provide things you didn't think of yet
-
-ActionPack e.g. is useful
+But Yehuda says that Rails will always provide things you didn't think of yet.
+So maybe this is a silly experiment. But Rails 3 isn't here yet! So if you want
+to do this kind of app today, clone Vegas and go for it.
 
