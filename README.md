@@ -2,6 +2,8 @@
 
 ## ..or, "How to get Rails 3, today."
 
+### by Alex Chaffee, @alexch, alex@cohuman.com, http://github.com/alexch
+
 DHH said he made Rails because he felt the frameworks were getting in the way between him and the app
 
 I feel the same way about Rails.

@@ -3,7 +3,7 @@ class Login < Erector::Widget
   
   def content
     form :action => "/login", :method => "post" do
-      widget(LabelTable.new("Login") do |f|
+      widget(LabelTable.new(:title => "Login") do |f|
         f.field("Name") do
           input(:name => "name", :type => "text", :size => "30")
         end

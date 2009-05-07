@@ -32,10 +32,10 @@ class LabelTable < Erector::Widget
     @buttons << button_proc
   end
 
-  # todo: use hash args and 'needs'
+  needs :title
   
-  def initialize(title)
-    super(:title => title)
+  def initialize(options)
+    super(options)
     @fields = []
     @buttons = []
     yield self

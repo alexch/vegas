@@ -34,10 +34,8 @@ class FullArticle < Erector::Widget
       article.comments.each do |comment|
         li :class => "comment" do
           div :class => "comment_body" do
-            comment.body
+            widget CommentView.new(:comment => comment)
           end
-
-          widget Byline, :user => article.user, :at => article.at
 
           if current_user == comment.author
             # todo: make this activate inline editing widgets
@@ -46,5 +44,7 @@ class FullArticle < Erector::Widget
         end
       end
     end
+    
+    widget CommentForm, :article => article
   end
 end

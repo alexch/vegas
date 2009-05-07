@@ -79,7 +79,7 @@ end
 
 ## home
 get '/' do
-  MainPage.new(:current_user => current_user, :users => User.find(:all)).to_s
+  render_page MainPage, :users => User.find(:all)
 end
 
 get "/user/:id" do
@@ -123,7 +123,7 @@ end
 
 post "/article/:id/comment" do
   article = Article.find(params[:id])
-  comment = article.comments.create(:author => current_user, :body => params["body"])
+  comment = article.comments.create(:author => current_user, :body => params[:body])
   CommentView.new(:comment => comment).to_s  # XHR
 end
 

@@ -2,7 +2,7 @@ class CreateUser < Erector::Widget
   needs nil
   def content
     form :action => "/user", :method => "post" do
-      widget(LabelTable.new("Sign Up") do |f|
+      widget(LabelTable.new(:title => "Sign Up") do |f|
         f.field("Name") do
           input(:name => "name", :type => "text", :size => "30")
         end

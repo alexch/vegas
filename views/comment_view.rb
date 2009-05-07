@@ -7,9 +7,7 @@ class CommentView < Erector::Widget
 
   def content
     div :class => "comment" do
-      p do
-        comment.body
-      end
+      text comment.body
       widget Byline, :user => comment.author, :at => comment.at
     end
   end

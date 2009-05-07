@@ -4,7 +4,6 @@ class VegasPage < Page
   
   needs :current_user, :flash => nil
 
-  
 
   def page_title
     "vegas"
@@ -67,6 +66,9 @@ class VegasPage < Page
     render_logo
     div :class => "clear"
     render_flash
+    div :class => "links" do
+      links
+    end
     div :class => "search_box" do
       widget SearchBox
     end
@@ -80,6 +82,35 @@ class VegasPage < Page
   def main_content
     instance_eval(&@block) if @block  
   end
+  
+  def links
+    ul do
+      li do
+        a "Post New Article", :href => "/article/new"
+      end
+    end
+  end
+  
+  style <<-STYLE
+    .links {
+      max-width: 20em;
+      border: 1px solid black;
+      padding: 1em;
+      vertical-align: top;
+    }
+    
+    .links ul {
+      list-style: none;
+      padding: 0px 0px 1em 1em;
+    }
+    
+    .links li {
+      padding: 0px;
+    }
+    
+  STYLE
+  
+  
 
   style <<-STYLE
 
@@ -132,12 +163,18 @@ class VegasPage < Page
     
     div.main {
       min-width: 20em;
-      max-width: 50em;
+      max-width: 40em;
       margin: auto;
     }
     
     div.search_box {
       float: right;
+      border: 1px solid black;
+    }
+
+    div.links {
+      float: left;
+      border: 1px solid black;
     }
   STYLE
   
