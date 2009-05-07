@@ -96,9 +96,8 @@ end
 
 get "/article/:id" do
   article = Article.find(params[:id])
-  SingleWidgetPage.new(
-    FullArticle.new(:article => article, :current_user => current_user)
-    ).to_s
+  article_view = FullArticle.new(:article => article, :current_user => current_user)
+  render_page SingleWidgetPage, :widget_class => article_view
 end
 
 post "/article" do
