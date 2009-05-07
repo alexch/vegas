@@ -20,7 +20,7 @@ class AppTest < MyTestCase
   end
   
   def response_body
-    response.body.first  # why is the body an array?
+    response.body.join  # the body is an array in Rack land
   end
   
   def request(*args)
@@ -140,7 +140,7 @@ class AppTest < MyTestCase
   ## article
   
   def test_creating_article_when_nobody_logged_in
-    post '/article/create', :name => "eat lunch"
+    post '/article', :name => "eat lunch"
     assert_equal 1, Article.count
     article = Article.all.first
     assert_equal "eat lunch", article.name
@@ -149,7 +149,7 @@ class AppTest < MyTestCase
   
   def test_creating_article_uses_current_user_as_author
     login(@nicola)
-    post '/article/create', :name => "eat lunch"
+    post '/article', :name => "eat lunch"
     article = Article.all.first
     assert_equal "eat lunch", article.name
     assert_equal nicola, article.author
