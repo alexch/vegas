@@ -1,11 +1,8 @@
 class SingleWidgetPage < VegasPage
-  def initialize(widget_class)
-    super()
-    @widget_class = widget_class
-  end
+  needs :widget_class
   
   def main_content
-    widget @widget_class
+    widget widget_class
   end
 end
 

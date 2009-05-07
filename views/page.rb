@@ -51,7 +51,7 @@
 #    or inline references.
 #
 class Page < Erector::Widget
-
+  
   @@js = []  
   def self.js(*files)
     files.each {|f| @@js << f unless @@js.include?(f) }

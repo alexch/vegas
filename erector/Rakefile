@@ -17,10 +17,10 @@ require "erector/version"
 gem_definition = lambda do |s|
   s.name = "erector"
   s.summary = "Html Builder library."
-  s.email = "erector-devel@rubyforge.org"
+  s.email = "erector@googlegroups.com"
   s.description = "Html Builder library."
   specs = Dir.glob("spec/**/*").reject{|file| file =~ %r{^spec/rails_root}}
-  s.files =  ["lib/**/*", "README.txt", "VERSION.yml", "bin/erect", specs]
+  s.files =  ["lib/**/*", "README.txt", "VERSION.yml", "bin/erector", specs]
   s.test_files =  specs
 end
 
@@ -51,7 +51,7 @@ Hoe.new("erector", Erector::VERSION) do |hoe|
 
   # Many of these options are based on what will work with rubyforge and
   # groups and permissions
-  hoe.rsync_args = "-rlpv --delete --inplace --exclude .svn"
+  hoe.rsync_args = "-rlv --delete --inplace --exclude .svn"
 end
 Hoe::remove_tasks("audit", "check_manifest", "post_blog", "multi", "test", "test_deps", "docs")
 

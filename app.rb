@@ -31,7 +31,7 @@ end
 ## user
 
 get '/user' do
-  render_page SingleWidgetPage.new(CreateUser)
+  render_page SingleWidgetPage, :widget_class => CreateUser
 end
 
 post '/user' do
@@ -71,7 +71,7 @@ end
 get '*' do
   pass if logged_in?
   flash("Please log in.") unless flash?
-  render_page(VegasPage.new)
+  render_page VegasPage
   # todo: encode post-login destination
 end
 

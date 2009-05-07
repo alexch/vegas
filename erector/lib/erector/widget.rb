@@ -2,32 +2,36 @@ module Erector
   
   # A Widget is the center of the Erector universe. 
   #
-  # To create a widget, extend Erector::Widget and implement 
-  # the +content+ method. Inside this method you may call any of the tag methods like +span+ or +p+ to emit HTML/XML
-  # tags. 
-  # 
-  # You can also define a widget on the fly by passing a block to +new+. This block will get executed when the widget's
-  # +content+ method is called.
+  # To create a widget, extend Erector::Widget and implement the +content+
+  # method. Inside this method you may call any of the tag methods like +span+
+  # or +p+ to emit HTML/XML tags. 
+  #  
+  # You can also define a widget on the fly by passing a block to +new+. This
+  # block will get executed when the widget's +content+ method is called.
   #
-  # To render a widget from the outside, instantiate it and call its +to_s+ method.
+  # To render a widget from the outside, instantiate it and call its +to_s+
+  # method.
   #
-  # A widget's +new+ method optionally accepts an options hash. Entries in this hash are converted to instance
-  # variables, and +attr_reader+ accessors are defined for each.
+  # A widget's +new+ method optionally accepts an options hash. Entries in
+  # this hash are converted to instance variables, and +attr_reader+ accessors
+  # are defined for each.
   #
-  # TODO: You can add runtime input checking via the +needs+ macro. If any of the variables named via 
-  # +needs+ are absent, an exception is thrown. Optional variables are specified with +wants+. If a variable appears
-  # in the options hash that is in neither the +needs+ nor +wants+ lists, then that too provokes an exception. 
-  # This mechanism is meant to ameliorate development-time confusion about exactly what parameters are supported
-  # by a given widget, avoiding confusing runtime NilClass errors.
-  # 
-  # To call one widget from another, inside the parent widget's +content+ method, instantiate the child widget and call
-  # the +widget+ method. This assures that the same output stream
-  # is used, which gives better performance than using +capture+ or +to_s+. It also preserves the indentation and
-  # helpers of the enclosing class.
-  # 
-  # In this documentation we've tried to keep the distinction clear between methods that *emit* text and those that
-  # *return* text. "Emit" means that it writes to the output stream; "return" means that it returns a string
-  # like a normal method and leaves it up to the caller to emit that string if it wants.
+  # You can add runtime input checking via the +needs+ macro. See #needs. 
+  # This mechanism is meant to ameliorate development-time confusion about
+  # exactly what parameters are supported by a given widget, avoiding
+  # confusing runtime NilClass errors.
+  #  
+  # To call one widget from another, inside the parent widget's +content+
+  # method, instantiate the child widget and call the +widget+ method. This
+  # assures that the same output stream is used, which gives better
+  # performance than using +capture+ or +to_s+. It also preserves the
+  # indentation and helpers of the enclosing class.
+  #  
+  # In this documentation we've tried to keep the distinction clear between
+  # methods that *emit* text and those that *return* text. "Emit" means that
+  # it writes to the output stream; "return" means that it returns a string
+  # like a normal method and leaves it up to the caller to emit that string if
+  # it wants.
   class Widget
     class << self
       def all_tags
@@ -85,7 +89,8 @@ module Erector
     # If needed parameters are not passed in to #new, then an exception will be thrown
     # (with a hopefully useful message about which parameters are missing). This is intended
     # to catch silly bugs like passing in a parameter called 'name' to a widget that expects
-    # a parameter called 'title'. 
+    # a parameter called 'title'. Every variable declared in 'needs' will get an attr_reader
+    # accessor declared for it.
     #
     # You can also declare default values for parameters using hash syntax. You can put #needs
     # declarations on multiple lines or on the same line; the only caveat is that if there are
@@ -93,9 +98,11 @@ module Erector
     # hash parameter).
     #
     # If a widget has no #needs declaration then it will accept any combination of parameters
-    # (and make accessors for them) just like normal. If a widget wants to declare that it 
+    # (and make accessors for them) just like normal. In that case there will be no 'attr_reader's
+    # declared.
+    # If a widget wants to declare that it 
     # takes no parameters, use the special incantation "needs nil" (and don't declare any other
-    # needs, or kittens will cry).
+    # needs, or kittens will cry). 
     #
     # Usage:
     #    class FancyForm < Erector::Widget
@@ -119,7 +126,13 @@ module Erector
 
     protected
     def self.get_needs
-      (@needs ||= [])
+      @needs ||= []
+      parent = self.ancestors[1]
+      if parent.respond_to? :get_needs
+        parent.get_needs + @needs
+      else
+        @needs
+      end
     end
 
     public
@@ -145,7 +158,8 @@ module Erector
       unless assigns.is_a? Hash
         raise "Erector's API has changed. Now you should pass only an options hash into Widget.new; the rest come in via to_s, or by using #widget."
       end
-      if respond_to? :render
+      if (respond_to? :render) &&
+        !self.method(:render).to_s.include?("(RailsWidget)")
         raise "Erector's API has changed. You should rename #{self.class}#render to #content."
       end
       @assigns = assigns
@@ -209,10 +223,17 @@ module Erector
     
     def assign_local(name, value)
       instance_variable_set("@#{name}", value)
-      metaclass.module_eval do
-        attr_reader name
+      if any_are_needed?
+        metaclass.module_eval do
+          attr_reader name
+        end
       end
     end
+    
+    def any_are_needed?
+      !self.class.get_needs.empty?
+    end
+    
     # Render (like to_s) but adding newlines and indentation.
     # This is a convenience method; you may just want to call to_s(:prettyprint => true)
     # so you can pass in other rendering options as well.  

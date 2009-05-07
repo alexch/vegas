@@ -57,7 +57,7 @@ class Faq < Page
       Section.new("Where are some examples?") do
         p do
           text "This very web site you're reading right now is built with Erector, using the "
-          a "erect", :href => "userguide.html#erect"
+          a "erector", :href => "userguide.html#erector"
           text " tool. See the "
           a "repository", :href => "http://github.com/pivotal/erector"
           text " (especially the web directory)."
@@ -82,7 +82,11 @@ class Faq < Page
             li "Its use of instance_eval and capture, as well as a view's functional-but-not-quite-an-object nature, led to too much magic and made it very difficult to debug"
           end
         end
-        p "Erector was conceived as a natural evolution of Markaby, but overcoming these two flaws. We think Erector can do pretty much everything Markaby can; if you find a counterexample, please let us know on the erector-devel mailing list."
+        p do
+          text "Erector was conceived as a natural evolution of Markaby, but overcoming these two flaws. We think Erector can do pretty much everything Markaby can; if you find a counterexample, please let us know on the "
+          a " mailing list", :href => "http://googlegroups.com/group/erector"
+          text "."
+        end
       end,
       
       Section.new("How does Erector stack up against HAML?") do
@@ -93,16 +97,18 @@ class Faq < Page
       end,
       
       Section.new("How do I use layouts?") do
-        p "Rails has a concept of layouts, which are essentially skeletons for a page, which get fleshed out by views. This is a powerful mechanism for rendering web pages; however, the mechanism Rails uses (via content_for and yield) is fundamentally incompatible with Erector's \"just call render\" design."
+        p "Rails has a concept of layouts, which are essentially skeletons for a page, which get fleshed out by views. This is a powerful mechanism for rendering web pages; however, the mechanism Rails uses (via content_for and yield) is fundamentally incompatible with Erector's \"just call the content method\" design."
         p do
           text "We recommend a slightly different approach, known officially as the "
           a "Template Method Design Pattern", :href => "http://en.wikipedia.org/wiki/Template_method_pattern"
-          text ": define a parent class (e.g. Page) and have your view widgets extend this class rather than directly extending Erector::Widget. The parent class implements render, and calls down to the child class to render sections or acquire information that's specific to that view."
+          text ": define a parent class (e.g. Page) and have your view widgets extend this class rather than directly extending Erector::Widget. The parent class implements content, and calls down to the child class to render sections or acquire information that's specific to that view."
         end
         p do
           text "For an example with source code, see "
           a "the user guide", :href => "userguide.html#layoutinheritance"
-          text "."
+          text ". Also see Alex Chaffee's Page base class, at "
+          a " this gist snippet", :href=> 'http://gist.github.com/103976'
+          text " (which we may soon integrate into Erector proper)."
         end
       end
       

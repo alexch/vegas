@@ -1,7 +1,7 @@
 = Erector
 
 * http://erector.rubyforge.org
-* mailto:erector-devel@rubyforge.org
+* mailto:erector@googlegroups.com
 * http://www.pivotaltracker.com/projects/482
 
 == DESCRIPTION
@@ -18,20 +18,20 @@ project site at http://erector.rubyforge.org for more documentation.
     require 'erector'
 
     class Hello < Erector::Widget
-      def render
+      def content
         html do
           head do
             title "Hello"
           end
           body do
             text "Hello, "
-            b "world!", :class => 'big'
+            b "#{target}!", :class => 'big'
           end
         end
       end
     end
 
-    Hello.new.to_s
+    Hello.new(:target => 'world').to_s
     => "<html><head><title>Hello</title></head><body>Hello, <b class=\"big\">world!</b></body></html>"
 
 == REQUIREMENTS
@@ -59,7 +59,7 @@ When installing this way, erector is automatically available to your Rails code
 
 (The MIT License)
 
-Copyright (c) 2007-8 Pivotal Labs
+Copyright (c) 2007-2009 Pivotal Labs
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

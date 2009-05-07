@@ -29,8 +29,8 @@ helpers do
   end
 
 #todo: clean up for 1-pass 
-  def render_page(page)
-    page.assign_locals({:current_user => current_user, :flash => flash})
+  def render_page(page_class, options = {})
+    page = page_class.new({:current_user => current_user, :flash => flash}.merge(options))
     page.to_s
   end
 end

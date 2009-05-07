@@ -20,13 +20,18 @@ class Developers < Page
     h2 "Check out the available rake tasks:"
     pre "rake -T"
 
-    h2 "Sign up for the erector-devel mailing list:"
-    a("erector-devel mailing list", :href => "http://rubyforge.org/mailman/listinfo/erector-devel")
+    h2 "Sign up for the mailing list:"
+    a "'erector' Google Group", :href => "http://groups.google.com/group/erector"
+    p do
+      text "and check out the archives of the old "
+      a "erector-devel mailing list", :href=>"http://rubyforge.org/mailman/listinfo/erector-devel"
+    end
 
-    h2 "Join the Lighthouse project:"
-    url "mailto:erector-devel@rubyforge.org"
-    text " with your Lighthouse account name, then visit "
-    url "http://erector.lighthouseapp.com"
+    h2 "Watch the github repo at "
+    url "http://github.com/pivotal/erector"
+
+    h2 "Join the Pivotal Tracker project at "
+    url "http://www.pivotaltracker.com/projects/482"
     
     h2 "Basic read-only git usage"
     p "First, install git.  Then download erector using git:"
@@ -73,9 +78,8 @@ END
     ol do
       li "Pick a version number. Either increment the major, minor, or tiny version from the previous version."
       li %q{Look at History.txt and make sure the release notes are up to date. Put the version number on the top line (after the "==").}
-      li "Put the version number in lib/erector/version.rb as Erector::VERSION."
+      li "Put the version number in VERSION.yml and in erector.gemspec"
       li %q{Commit these changes, e.g. 'git commit -a'}
-      li %q{Create a tag, e.g. 'git tag REL-1-2-3; git push origin REL-1-2-3'}
       li %q{Run 'rake package' so that you can see whether the gem generation seems to work locally before proceeding to try to upload it to rubyforge (if you skip this step, the package will be generated when you run rake release)}
       li "If you haven't done so before, run 'rubyforge setup' and 'rubyforge config' (for more details on these steps, see README.txt in the rubyforge gem)"
       li "Run 'rake release VERSION=1.2.3'. (The parameter is to confirm you're releasing the version you intend to.)"
@@ -83,7 +87,7 @@ END
       li %q{Immediately go into History.txt and make a new section at the top. Since we won't yet know what the next version will be called, the new section will be noted by a single "==" at the top of the file.}
       li do
         text "Send email to "
-        a("erector-devel mailing list", :href => "mailto:erector-devel@rubyforge.org")
+        a("erector Google Groups mailing list", :href => "mailto:erector@googlegroups.com")
         text " announcing the new release."
       end
     end

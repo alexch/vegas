@@ -1,6 +1,8 @@
 req 'views/page'
 
 class VegasPage < Page
+  
+  needs :current_user, :flash => nil
 
   def page_title
     "vegas"

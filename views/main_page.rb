@@ -2,7 +2,7 @@ req 'views/vegas_page'
 
 class MainPage < VegasPage
 
-  needs :current_user, :users
+  needs :users
   
   style <<-STYLE
     .links {
