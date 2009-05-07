@@ -1,3 +1,6 @@
+enable :methodoverride
+enable :sessions
+# use Rack::Session::Pool  # doesn't work :-(
 
 configure :production do
   # redirect standard out and standard error to the production log file

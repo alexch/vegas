@@ -1,9 +1,6 @@
 require File.expand_path("#{File.dirname(__FILE__)}/setup")
 require 'sinatra'
 
-enable :methodoverride
-enable :sessions
-# use Rack::Session::Pool  # doesn't work :-(
 set :root, File.dirname(__FILE__)
 set :app_file, __FILE__
 
