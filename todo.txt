@@ -1,0 +1,6 @@
+TODO
+-----
+
+Use Warden for authentication
+  http://gist.github.com/107966
+  
