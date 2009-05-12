@@ -1,6 +1,8 @@
 require 'osx/foundation'
 OSX.require_framework '/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework'
 
+#TODO: make it notice deleted files
+
   # stolen from RSpactor, http://github.com/mislav/rspactor
   # based on http://rails.aizatto.com/2007/11/28/taming-the-autotest-beast-with-fsevents/
   class Listener

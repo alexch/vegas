@@ -1,25 +1,66 @@
 require "lib/filesystemwatcher"
 
+# todo: make this work in non-Mac and non-Unix environments (also Macs without growlnotify) 
 class Runner
+  
+  def app_name
+    # todo: make sure this works in non-Mac and non-Unix environments
+    File.dirname(File.expand_path(__FILE__)).gsub(/^.*\//, '').capitalize
+  end
+  
+  def growlcmd(title, body)
+    "growlnotify -n #{app_name} -m \"#{body}\" \"#{app_name} #{title}\""
+  end
+
+  def growl(title, body)
+    `#{growlcmd title, body} &`
+  end
+  
   def restart
     beginning = Time.now
-    puts "#{beginning.strftime("%T")} - Restarting app..."
+    puts ""
+    puts "#{beginning.strftime("%T")} - Restarting #{app_name}..."
     puts ""
     stop
     start
   end
 
   def start
+    if (!@already_running)
+      growl "Launching", "To infinity... and beyond!"
+      @already_running = true
+    end
+
     @pid = Kernel.fork do
        # Signal.trap("HUP") { puts "Ouch!"; exit }
-      exec('ruby app.rb')
+       exec("ruby app.rb")
     end
+
+    Process.detach(@pid)
+
+    sleep 2
+    unless running?
+      growl "Launch Failed", "See console for error output"
+      @already_running = false
+    end
+    
     self
   end
- 
+  
+  def running?
+    kill(0)
+  end
+  
+  def kill(signal)
+    Process.kill(signal, @pid)
+    true
+  rescue
+    false
+  end
+
   def stop
-    Process.kill("KILL", @pid)
-    Process.wait(@pid)
+    kill("KILL") && Process.wait(@pid)
+    # puts "RIP #{@pid}"
   end
 
   def git_head_changed?
@@ -37,7 +78,7 @@ class Runner
     begin
       require 'lib/listener'
       listener = Listener.new(%w(rb erb haml)) do |files|
-        p files
+        puts "Changed: #{files.join(', ')}"
         restart
       end.run(".")
     rescue
