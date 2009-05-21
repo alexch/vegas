@@ -29,6 +29,8 @@ class Runner
     if (!@already_running)
       growl "Launching", "To infinity... and beyond!"
       @already_running = true
+    else
+      growl "Restarting", "Here we go again!"
     end
 
     @pid = Kernel.fork do
@@ -60,7 +62,8 @@ class Runner
 
   def stop
     kill("KILL") && Process.wait(@pid)
-    # puts "RIP #{@pid}"
+  rescue
+    false
   end
 
   def git_head_changed?

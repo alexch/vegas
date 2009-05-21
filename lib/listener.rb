@@ -1,5 +1,6 @@
-require 'osx/foundation'
-OSX.require_framework '/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework'
+begin
+  require 'osx/foundation'
+  OSX.require_framework '/System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework'
 
 #TODO: make it notice deleted files
 
@@ -85,3 +86,6 @@ OSX.require_framework '/System/Library/Frameworks/CoreServices.framework/Framewo
       valid_extensions.nil? or valid_extensions.include?(file_extension(file))
     end
   end
+rescue MissingSourceFile
+  # this is to not fail when running on a non-Mac
+end
