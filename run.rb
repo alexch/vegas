@@ -1,3 +1,6 @@
+# see also http://github.com/adammck/restartomatic
+
+
 require "lib/filesystemwatcher"
 
 # todo: make this work in non-Mac and non-Unix environments (also Macs without growlnotify) 

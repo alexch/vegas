@@ -20,7 +20,7 @@ class AppTest < MyTestCase
   end
   
   def response_body
-    response.body.join  # the body is an array in Rack land
+    response.body
   end
   
   def request(*args)

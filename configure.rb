@@ -20,7 +20,7 @@ configure do
 end
 
 configure do
-  connect_to(Sinatra::Application.environment)
+  DB.connect_to(Sinatra::Application.environment)
 end
 
 configure do

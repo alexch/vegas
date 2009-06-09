@@ -5,7 +5,7 @@ require 'sinatra'
 require 'sinatra/test'
 
 set :environment, :test
-connect_to("test")
+DB.connect_to("test")
 ActiveRecord::Migration.verbose = true
 ActiveRecord::Migrator.migrate("db/migrate", nil)
 

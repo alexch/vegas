@@ -1,0 +1,118 @@
+== 0.6.4
+* "erector" command-line tool improved:
+  * if converting an HTML/ERB file under a "views" directory, uses "Erector::RailsWidget" as parent class
+  * no longer chokes on "if IE" directives
+  * changes 'yield' in a scriptlet to use a missing "@content_for_layout"
+* require treetop 1.2.5
+
+== 0.6.3 / 2009-05-06
+* Major update to API. You *will* have to change your code. There are deprecation warnings/errors
+and there should be an upgrade guide up on the website soon.
+* 'render' renamed to 'content'
+* widget constructor only takes one parameter, an 'assigns' hash (plus the optional default block)
+* to render one widget from inside another, use the 'widget' method (not 'render_to'). This method 
+accepts either a widget instance, or a widget class and an assigns hash.
+* 'needs' macro to declare the variables your widget accepts via the 'assigns' constructor parameter
+* Removed Widget#to_s caching, which fixed indentation issues.
+* BUGFIX: Indentation level is now correctly propagated to nested widgets.
+* Erector's Rails support strategy has changed. The released version of Erector only supports the latest stable
+Rails version (currently 2.3.2). If you need support for earlier versions of Rails, there are separate
+Git branches for each one, but we will not be in the habit of keeping these up to date with the latest
+features and patches.
+* Renamed the command line tool to 'erector'
+
+== 0.5.1
+* Added methods to easily render additional HTML elements (col,
+object, and about a dozen others).  There are now methods for all 
+non-deprecated elements from the HTML 4.0.1 spec.  As before, if 
+erector doesn't have a method built-in, you can still call the element 
+or empty_element method to output any tag.
+* The method instruct!, which was a deprecated synonym for instruct,
+has been removed.
+* Fixed bug in resolving view files for pluralized controllers
+
+=== 0.5.0 / 2008-12-13
+* install_dependencies refreshes the rails_versions directory
+* Widget takes a string instead of an IO object to be more compatible with Rails.
+* Removed Doc
+* Widget writes directly to output string instead of to #doc
+
+=== 0.4.200 / 2008-10-11
+* Erector can now pretty-print the generated HTML to make it easier to read.
+* Add join method to Erector::Widget.
+
+=== 0.4.191 / 2008-07-29
+* Renamed HtmlParts to Doc
+* Widget#doc is now a HtmlParts which proxies to the passed in IO stream
+* Better compatibility with standard Rails rendering because ActionController::Base#render and #render_widget now have the Widget write directly to _erbout.
+* ActionView::Base objects run with Erector now receive all of the instance variables
+* Erector works with erb layouts
+* Deprecate fake_erbout
+* Better handling for file with .html.rb extension.
+* Fix overwriting issue when using Rails helpers
+* New method Widget#character
+* Widget#nbsp without arguments now outputs a single non-breaking space.
+
+=== 0.3.110 / 2008-05-29
+
+* support capture from rails helpers, allowing form_for/form_tag to work right
+* fix bug in view_paths support (finding views was hosed)
+
+=== 0.3.105 / 2008-05-29
+
+* Lots of changes to support Rails integration better.
+* Add partial support for render :partial.
+* More Rails helpers proxies added to helpers.rb.
+* Fake erbouts can now nest, allowing better support for Rails helpers like form_for (though they're currently capped at 10 deep to head off infinite regress).
+* Rails finds both .rb and .html.rb files inside the app/views directories.
+* Use Rails view_paths instead of hardcoded RAILS_ROOT/app/views (patch by Rami Grossman)
+* add 'url' and 'css' convenience methods to Widget
+
+=== 0.2.83 / 2008-04-23
+
+* "erect" supports command-line options
+* "erect" now works backwards -- you can output static html from a widget.rb file
+* The web site is generated from erector classes (still pretty minimal though)
+
+=== 0.2.61 / 2008-04-18
+
+* Improvements to "erect"
+  * works on HTML attributes (including namespaced attributes and hyphenated attributes)
+  * works on directories (recursively looking for .html and .html.erb and .rhtml files)
+  * converts DOCTYPE nodes
+  * deals with HTML entities inside text and attributes
+
+=== 0.2.54 / 2008-04-15
+
+* New script "erect" to convert (some) .html.erb files into erector classes.
+
+=== 0.2.42 / 2008-04-11
+
+* Rails Controller now can render Erector widgets using #render
+* Erector views can live inside Rails "app/views" directory, just like other views
+
+=== 0.1.25 / 2008-02-26
+
+* nbsp method
+* :class => ['one', 'two']  (that is, passing an array rather than a string)
+... perhaps one or two I forgot.
+* rename tag to element
+* add empty_element feature
+* for the built-in HTML tags, knows which ones should be empty and which shouldn't be.
+  For example, generates `<input />` rather than `<input></input>`
+* text and attributes are quoted by default; call raw to avoid this
+* h is rarely necessary now, but it returns a string rather than appending to the buffer
+* nbsp method turns spaces into non-breaking spaces
+* sending in an array for attribute values (typically CSS classes) concatenates them separated by spaces
+* The column definition name can be a Proc that gets executed.
+* Renamed instruct! to instruct (old one remains as a deprecated method for now), as it is no more side-effecting (or dangerous or whatever) than any other method in Widget.
+
+=== 0.1.0 / 2008-02-13
+
+* First public release
+
+=== 0.0.1
+
+* Was on pivotalrb.rubyforge.org
+
+
