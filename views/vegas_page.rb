@@ -4,7 +4,6 @@ class VegasPage < Page
   
   needs :current_user, :flash => nil
 
-
   def page_title
     "vegas"
   end
@@ -35,14 +34,12 @@ class VegasPage < Page
   def render_logo
     div :class => "logo" do
       a :href => "/" do
-        img :src => "/img/vegas_logo.jpg", :width => "258", :height => "206"
+        img :src => "/img/vegas_logo.gif", :width => 380/2, :height => 303/2
       end
-      div :style => "position: relative; top: -40px; left: 80px;", :class => :logo do
+      div :style => "position: relative; top: -20px; left: 80px;", :class => :logo do
         taglines = [
           "Rails is so last year",
-          "Rails sucks",
           "Running Rails off the tracks",
-          "Rails has outlived its uselessness",
           "Rails 3... today."
         ]
         span "Vegas: #{taglines[rand(taglines.size)]}", :class => "tagline"
@@ -62,18 +59,31 @@ class VegasPage < Page
   end
   
   def body_content
-    render_login
-    render_logo
-    div :class => "clear"
+    div :class => "top" do
+      render_logo
+      render_login
+      br
+      br
+      div :class => "search_box" do
+        widget SearchBox
+      end
+      div :class => "clear"
+    end
+    hr
     render_flash
-    div :class => "links" do
-      links
-    end
-    div :class => "search_box" do
-      widget SearchBox
-    end
-    div :class => "main" do
-      main_content
+    table :cellpadding => "10" do
+      tr do
+        td :valign => "top" do
+          div :class => "links" do
+            links
+          end
+        end
+        td do
+          div :class => "main" do
+            main_content
+          end
+        end
+      end
     end
     render_footer
   end
@@ -135,9 +145,16 @@ class VegasPage < Page
       margin: 0px;
       padding: 0px;
     }
-    
+
+    div.top {
+      min-height: 150px;
+    }
+
     div.logo {
-      float: left;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      float:left;
     }
 
     div.login_box {

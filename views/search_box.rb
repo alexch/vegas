@@ -5,6 +5,7 @@ class SearchBox < Erector::Widget
   Page.css "/lib/jquery.autocomplete.css"
   Page.js "/lib/jquery.js"
   Page.js "/lib/jquery.autocomplete.js"
+  Page.style ".search {padding: .5em; clear: right;}"
 
   def base_id
     "#{self.class.name}_#{self.object_id}"
@@ -43,6 +44,9 @@ class SearchBox < Erector::Widget
   
   def content
     div :class => "search" do
+
+      # Free magnifier icon from http://www.pinvoke.com/
+      img :src => "/img/magnifier-left.png"
 
       # put the text field outside the form so it doesn't submit when you hit enter
       input :type => "text",
