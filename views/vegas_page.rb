@@ -8,8 +8,7 @@ class VegasPage < Page
     "vegas"
   end
 
-  # todo: test all flash stuff, rename this method
-  def render_flash
+  def flash_box
     if @flash
       p :class => "flash" do
         text @flash
@@ -17,7 +16,7 @@ class VegasPage < Page
     end
   end
   
-  def render_login
+  def login_box
     div :class => "login_box" do
       if @current_user
         text "Hello, "
@@ -31,7 +30,7 @@ class VegasPage < Page
     end
   end
   
-  def render_logo
+  def logo
     div :class => "logo" do
       a :href => "/" do
         img :src => "/img/vegas_logo.gif", :width => 380/2, :height => 303/2
@@ -47,7 +46,7 @@ class VegasPage < Page
     end
   end
   
-  def render_footer
+  def footer
     hr
     center do
       span :style => "font-size: 8pt;" do
@@ -60,8 +59,8 @@ class VegasPage < Page
   
   def body_content
     div :class => "top" do
-      render_logo
-      render_login
+      logo
+      login_box
       br
       br
       div :class => "search_box" do
@@ -70,7 +69,7 @@ class VegasPage < Page
       div :class => "clear"
     end
     hr
-    render_flash
+    flash_box
     table :cellpadding => "10" do
       tr do
         td :valign => "top" do
@@ -85,7 +84,7 @@ class VegasPage < Page
         end
       end
     end
-    render_footer
+    footer
   end
   
   # override me
