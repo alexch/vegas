@@ -3,9 +3,9 @@ require 'thread'
 # The Runnable module is a generic mixin for including state and
 # status information in a class
 module ServiceState
-  # puts "---------"
-  # puts caller.join("\n\t")
-   
+   #puts "---------"
+   #puts caller.join("\n\t")
+
   # state constants
   NOT_STARTED = 0
   STARTED = 1

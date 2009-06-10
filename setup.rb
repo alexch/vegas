@@ -2,18 +2,27 @@ require 'rubygems'
 require 'activesupport'
 require 'activerecord'
 
-# 'req' is a simple replacement for 'require' for use in a project
-# whose file layout uses subdirectories that does away with some
-# annoyances like using '..' or 'RAILS_ROOT' all over the place. 
+# Vegas adds the project root directory to the load path ($:).
+# So if you want to require another file, even if it's in the same
+# directory as the current file, you must specify its full path
+# relative to the project root. The tradeoff is that with this
+# convention, you're less likely to get 'double includes' since
+# every reference to a file will have the same name.
 #
-# Put this file in your project root directory and add your source
-# root directories to the ROOT_DIRS array. In your main app, require 
-# this file. Then inside your sources, do all your requires with req
-# relative to this root directory and they'll get found.
+# Vegas also automatically pre-requires all files underneath any
+# subdirectory in the ROOT_DIRS array. But it'll miss some, and
+# since it doesn't do Rails-style automatic class loading, you may need to
+# explicitly require some dependencies... if their names are
+# alphabetically greater than the name of the current file.
+# (Yeah, that's a code smell, but the other choice is to override
+# Object.const_missing like Rails does... which might not be such a bad
+# idea...)
 #
-# It also tries to pre-require all files it finds in those source dirs,
-# in alphabetical order, but it'll miss some, so you may need to declare
-# more req's in files that need them.
+# Simple instructions: Put this file (setup.rb) in your project
+# root directory and add your source
+# directories to the ROOT_DIRS array. In your main app, require
+# setup.rb. Then inside your sources, do all your requires
+# relative to the project root directory and they'll get found.
 #
 ROOT = File.expand_path(File.dirname(__FILE__))
 $:.unshift ROOT
@@ -21,24 +30,13 @@ Dir.chdir(ROOT)
 
 ROOT_DIRS = ["lib", "domain", "views"]
 
-def req(file)
-  unless file =~ /^\//
-    file = "#{ROOT}/#{file}"
-  end
-  # puts "requiring #{file}"
-  require file  # using "load" allows auto-reloading, in theory
-rescue => e
-  $stderr.puts "Error while requiring '#{file}'"
-  raise e
-end
-
 # Put frozen gems on the load path
-Dir["#{ROOT}/vendor/gems/*"].sort.each do |path|
+Dir["vendor/gems/*"].sort.each do |path|
   $: << "#{path}/lib"
 end
 
 # Load frozen gems
-Dir["#{ROOT}/vendor/gems/*"].sort.each do |path|
+Dir["vendor/gems/*"].sort.each do |path|
   gem_name = path.gsub(/.*\//, '').gsub(/-[0-9.]+$/, '')
   begin
     require gem_name
@@ -49,16 +47,16 @@ Dir["#{ROOT}/vendor/gems/*"].sort.each do |path|
 end
 
 # Load plugins (assumes no dependencies between plugins)
-Dir["#{ROOT}/vendor/plugins/*"].sort.each do |path|
+Dir["vendor/plugins/*"].sort.each do |path|
   $: << "#{path}/lib"
   init_file = "#{path}/init.rb"
-  req init_file if File.exist?(init_file)
+  require init_file if File.exist?(init_file)
 end
 
-# Put application directories on the load path
+# pre-require files underneath source root directories
 ROOT_DIRS.each do |dir|
-  Dir["#{ROOT}/#{dir}/**/*.rb"].sort.each do |file|
-    req file
+  Dir["#{dir}/**/*.rb"].sort.each do |file|
+    require file
   end
 end
 

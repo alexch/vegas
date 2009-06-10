@@ -1,6 +1,6 @@
 require "md5"
 require "thread"
-require "#{File.expand_path(File.dirname(__FILE__))}/servicestate"
+require "lib/servicestate"
 
 # This class will watch a directory or a set of directories and alert you of
 # new files, modified files, deleted files. You can optionally only be alerted

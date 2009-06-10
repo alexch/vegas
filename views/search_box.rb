@@ -1,4 +1,4 @@
-req 'views/page'
+require 'views/page'
 
 class SearchBox < Erector::Widget
 

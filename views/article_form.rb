@@ -1,4 +1,4 @@
-req 'views/form'
+require 'views/form'
 
 class ArticleForm < Erector::Widget
 

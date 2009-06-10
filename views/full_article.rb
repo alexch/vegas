@@ -1,4 +1,4 @@
-req 'views/page'
+require 'views/page'
 
 class FullArticle < Erector::Widget
 

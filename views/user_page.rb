@@ -1,4 +1,4 @@
-req 'views/vegas_page'
+require 'views/vegas_page'
 
 class UserPage < VegasPage
 
