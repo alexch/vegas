@@ -16,7 +16,7 @@ require 'activerecord'
 # more req's in files that need them.
 #
 ROOT = File.expand_path(File.dirname(__FILE__))
-$: << ROOT
+$:.unshift ROOT
 Dir.chdir(ROOT)
 
 ROOT_DIRS = ["lib", "domain", "views"]
@@ -43,6 +43,7 @@ Dir["#{ROOT}/vendor/gems/*"].sort.each do |path|
   begin
     require gem_name
   rescue => e
+    puts "Problem while loading gem #{gem_name}:"
     p e
   end
 end
